@@ -1,8 +1,8 @@
-name: Deploy AWS CDK
+name: Deploy and Destroy AWS CDK
 
 on:
-  #push:
-    #branches: [ main ]
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -48,10 +48,8 @@ jobs:
           ACCOUNT_ID: 664418961681
           AWS_REGION: us-east-1
 
-      - name: Debug S3 Access
-        run: aws s3 ls s3://cdk-hnb659fds-assets-664418961681-us-east-1/
-
       - name: CDK Deploy
         run: cdk deploy AwsCdkGithubStack --require-approval never
 
-      
+      - name: CDK Destroy
+        run: cdk destroy AwsCdkGithubStack --force
