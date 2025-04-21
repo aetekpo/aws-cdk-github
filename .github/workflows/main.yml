@@ -1,8 +1,8 @@
 name: Deploy AWS CDK
 
 on:
-  #push:
-    #branches: [ master ]
+  push:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -54,4 +54,6 @@ jobs:
       - name: CDK Deploy
         run: cdk deploy AwsCdkGithubStack --require-approval never
 
-      
+      - name: CDK Destroy
+        if: always()  # Ensures this runs even if deploy fails
+        run: cdk destroy AwsCdkGithubStack --force
